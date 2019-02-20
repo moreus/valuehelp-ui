@@ -1,4 +1,4 @@
 # valuehlp-ui
 ValueHelp UI Demo
 
-![Demo](https://github.com/moreus/valuehlp-ui/blob/master/images/valuehelp.jpg)
+![Demo](./master/images/valuehelp.png)
