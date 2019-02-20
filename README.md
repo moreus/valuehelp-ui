@@ -2,6 +2,6 @@
 ValueHelp UI Demo
 
 <p align="center">
-<img width="1920" height="1066" src="./master/images/valuehelp.png">
+<img width="800" height="435" src="./master/images/valuehelp.png">
 </p>
 
