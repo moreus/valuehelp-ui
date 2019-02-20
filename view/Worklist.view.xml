@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mvc:View
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns:core="sap.ui.core"
+	xmlns="sap.m"
+	xmlns:f="sap.f"
+	xmlns:layout="sap.ui.layout"
+	xmlns:table="sap.ui.table"
+	xmlns:smartfilterbar="sap.ui.comp.smartfilterbar"
+	xmlns:smarttable="sap.ui.comp.smarttable"
+	xmlns:unified="sap.ui.unified"
+	xmlns:data="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1"
+	controllerName="com.sap.grc.dpp.mainapp.controller.Worklist">
+	<f:DynamicPage
+		id="com.sap.grc.dpp.mainapp.display.page"
+		preserveHeaderStateOnScroll="true"
+		headerExpanded="{page>/headerExpanded}"
+		showFooter="true">
+		<f:title>
+			<f:DynamicPageTitle>
+				<f:heading></f:heading>
+				<f:actions>
+					<ToolbarSpacer />
+					<Button
+						id="com.sap.grc.dpp.mainapp.display.ShareButton"
+						icon="sap-icon://action"
+						tooltip="Share"
+						type="Transparent"
+						press="onShareButtonPressed" />
+				</f:actions>
+				<f:snappedContent>
+					<Text
+						id="com.sap.grc.dpp.mainapp.display.FilterText"
+						wrapping="false" />
+				</f:snappedContent>
+			</f:DynamicPageTitle>
+		</f:title>
+		<f:header>
+			<f:DynamicPageHeader
+				id="com.sap.grc.dpp.mainapp.display.PageHeader"
+				pinnable="false">
+				<f:content>
+					<!-- SMART FILTER BAR -->
+					<smartfilterbar:SmartFilterBar
+						id="com.sap.grc.dpp.mainapp.display.SmartFilterBar"
+						entityType="GRCDPG.Template"
+						showClearButton="true"
+						showClearOnFB="true"
+						search="onSearch"
+						reset="onReset"
+						initialise="onInitSmartFilterBar"
+						useToolbar="false"
+						assignedFiltersChanged="onAssignedFiltersChanged">
+						<smartfilterbar:customData>
+							<core:CustomData
+								key="defaultDropDownDisplayBehaviour"
+								value="idAndDescription" />
+							<core:CustomData
+								key="defaultTokenDisplayBehaviour"
+								value="idAndDescription" />
+							<core:CustomData
+								key="dateFormatSettings"
+								value='\{"UTC":true,"style":"short"\}' />
+						</smartfilterbar:customData>
+						<smartfilterbar:controlConfiguration>
+							<smartfilterbar:ControlConfiguration
+								id="com.sap.grc.dpp.mainapp.display.ValueHelpTemplateId"
+								key="TemplateId"
+								filterType="single"
+								index="0"
+								preventInitialDataFetchInValueHelpDialog="false"
+								groupId="_BASIC" />
+						</smartfilterbar:controlConfiguration>
+						<smartfilterbar:layoutData>
+							<FlexItemData shrinkFactor="0" />
+						</smartfilterbar:layoutData>
+						<smartfilterbar:groupConfiguration>
+							<smartfilterbar:GroupConfiguration
+								key="Others"
+								label="Others" />
+						</smartfilterbar:groupConfiguration>
+					</smartfilterbar:SmartFilterBar>
+				</f:content>
+			</f:DynamicPageHeader>
+		</f:header>
+		<f:content>
+			<smarttable:SmartTable
+				id="com.sap.grc.dpp.mainapp.display.RegulationManageSmartTable"
+				entitySet="Templates"
+				smartFilterId="com.sap.grc.dpp.mainapp.display.SmartFilterBar"
+				tableType="ResponsiveTable"
+				useExportToExcel="true"
+				beforeExport="onBeforeExport"
+				useVariantManagement="false"
+				useTablePersonalisation="true"
+				header="Entity List"
+				showRowCount="true"
+				enableAutoBinding="true"
+				class="sapUiResponsiveContentPadding">
+				<table:Table
+					id="com.sap.grc.dpp.mainapp.display.TemplateManage"
+					width="100%"
+					enableGrouping="false"
+					showColumnVisibilityMenu="false"
+					enableColumnFreeze="false"
+					enableCellFilter="true"
+					selectionMode="Single"
+					visibleRowCountMode="Auto">
+					<table:Column
+						sortProperty="TemplateId"
+						sorted="true"
+						filterProperty="TemplateId"
+						tooltip="{/#GRCDPG.Template/TemplateId/@sap:quickinfo}">
+						<Label text="{/#GRCDPG.Template/TemplateId/@sap:label}" />
+						<table:template>
+							<Text
+								text="{TemplateId}"
+								wrapping="false" />
+						</table:template>
+						<table:customData>
+							<core:CustomData
+								key="p13nData"
+								value='\{"columnKey": "TemplateId", "leadingProperty": "TemplateId"\}' />
+						</table:customData>
+					</table:Column>
+					<table:Column
+						sortProperty="TemplateName"
+						sorted="true"
+						filterProperty="TemplateName"
+						tooltip="{/#GRCDPG.Template/TemplateName/@sap:quickinfo}">
+						<Label text="{/#GRCDPG.Template/TemplateName/@sap:label}" />
+						<table:template>
+							<Text
+								text="{TemplateName}"
+								wrapping="false" />
+						</table:template>
+						<table:customData>
+							<core:CustomData
+								key="p13nData"
+								value='\{"columnKey": "TemplateName", "leadingProperty": "TemplateName"\}' />
+						</table:customData>
+					</table:Column>
+					<table:Column
+						sortProperty="CreatedAt"
+						sorted="true"
+						filterProperty="CreatedAt"
+						tooltip="{/#GRCDPG.Template/CreatedAt/@sap:quickinfo}">
+						<Label text="{/#GRCDPG.Template/CreatedAt/@sap:label}" />
+						<table:template>
+							<Text
+								text="{CreatedAt}"
+								wrapping="false" />
+						</table:template>
+						<table:customData>
+							<core:CustomData
+								key="p13nData"
+								value='\{"columnKey": "CreatedAt", "leadingProperty": "CreatedAt"\}' />
+						</table:customData>
+					</table:Column>
+					<table:Column
+						sortProperty="CreatedBy"
+						sorted="true"
+						filterProperty="CreatedBy"
+						tooltip="{/#GRCDPG.Template/CreatedBy/@sap:quickinfo}">
+						<Label text="{/#GRCDPG.Template/CreatedBy/@sap:label}" />
+						<table:template>
+							<Text
+								text="{CreatedBy}"
+								wrapping="false" />
+						</table:template>
+						<table:customData>
+							<core:CustomData
+								key="p13nData"
+								value='\{"columnKey": "CreatedBy", "leadingProperty": "CreatedBy"\}' />
+						</table:customData>
+					</table:Column>
+				</table:Table>
+				<smarttable:layoutData>
+					<FlexItemData
+						growFactor="1"
+						baseSize="0%" />
+				</smarttable:layoutData>
+			</smarttable:SmartTable>
+		</f:content>
+	</f:DynamicPage>
+</mvc:View>

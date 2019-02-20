@@ -1,0 +1,197 @@
+{
+	"_version": "1.9.0",
+	"sap.app": {
+		"id": "${project.artifactId}",
+		"type": "application",
+		"resources": "resources.json",
+		"i18n": "i18n/i18n.properties",
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"applicationVersion": {
+			"version": "${project.version}"
+		},
+		"ach": "GRC",
+		"dataSources": {
+			"mainService": {
+				"uri": "/odata/v1/mainapp.srv/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "localService/metadata.xml",
+					"annotations": [
+						"annotation"
+					]
+				}
+			},
+			"valuehelpService": {
+				"uri": "/odata/v1/library.srv/",
+				"type": "OData",
+				"settings": {
+					"odataVersion": "2.0",
+					"localUri": "/odata/v1/library.srv/metadata",
+					"annotations": [
+						"valuehelpannotation"
+					]
+				}
+			},
+			"valuehelpannotation": {
+				"type": "ODataAnnotation",
+				"uri": "/odata/v1/library.srv/annotation",
+				"settings": {
+					"localUri": "/odata/v1/library.srv/annotation"
+				}
+			},
+			"annotation": {
+				"type": "ODataAnnotation",
+				"uri": "annotations/annotation.xml",
+				"settings": {
+					"localUri": "annotations/annotation.xml"
+				}
+			}
+		},
+		"sourceTemplate": {
+			"id": "sap.ui.ui5-template-plugin.1worklist",
+			"version": "1.60.1"
+		}
+	},
+	"sap.fiori": {
+		"registrationIds": [
+			"F0000"
+		],
+		"archeType": "transactional"
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"icons": {
+			"icon": "sap-icon://task",
+			"favIcon": "",
+			"phone": "",
+			"phone@2": "",
+			"tablet": "",
+			"tablet@2": ""
+		},
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		}
+	},
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "com.sap.grc.dpp.mainapp.view.App",
+			"type": "XML",
+			"async": true,
+			"id": "app"
+		},
+		"dependencies": {
+			"minUI5Version": "${sap.ui5.dist.version}",
+			"libs": {
+				"sap.ui.core": {},
+				"sap.m": {},
+				"sap.f": {},
+				"sap.ushell": {},
+				"sap.collaboration": {
+					"lazy": true
+				}
+			}
+		},
+		"contentDensities": {
+			"compact": true,
+			"cozy": true
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "com.sap.grc.dpp.mainapp.i18n.i18n"
+				}
+			},
+			"": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                  "metadataUrlParams": {
+                    "sap-documentation": "heading,quickinfo",
+                    "sap-value-list": "none"
+                  }
+                }
+            },
+            "valuehelp": {
+                "dataSource": "valuehelpService",
+                "preload": true,
+                "settings": {
+                  "metadataUrlParams": {
+                    "sap-documentation": "heading,quickinfo",
+                    "sap-value-list": "none"
+                  }
+                }
+            },
+			"@i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"uri": "i18n/i18n.properties"
+			}
+		},
+		"services": {
+			"ShellUIService": {
+				"factoryName": "sap.ushell.ui5service.ShellUIService",
+				"lazy": false,
+				"settings": {
+					"setTitle": "auto"
+				}
+			}
+		},
+		"routing": {
+			"config": {
+				"routerClass": "sap.m.routing.Router",
+				"viewType": "XML",
+				"viewPath": "com.sap.grc.dpp.mainapp.view",
+				"controlId": "app",
+				"controlAggregation": "pages",
+				"bypassed": {
+					"target": [
+						"notFound"
+					]
+				},
+				"async": true
+			},
+			"routes": [
+				{
+					"pattern": "",
+					"name": "worklist",
+					"target": [
+						"worklist"
+					]
+				},
+				{
+					"pattern": "Templates/{objectId}",
+					"name": "object",
+					"target": [
+						"object"
+					]
+				}
+			],
+			"targets": {
+				"worklist": {
+					"viewName": "Worklist",
+					"viewId": "worklist",
+					"viewLevel": 1,
+					"title": "{i18n>worklistViewTitle}"
+				},
+				"object": {
+					"viewName": "Object",
+					"viewId": "object",
+					"viewLevel": 2,
+					"title": "{i18n>objectViewTitle}"
+				},
+				"objectNotFound": {
+					"viewName": "ObjectNotFound",
+					"viewId": "objectNotFound"
+				},
+				"notFound": {
+					"viewName": "NotFound",
+					"viewId": "notFound"
+				}
+			}
+		}
+	}
+}
